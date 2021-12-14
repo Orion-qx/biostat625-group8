@@ -1,6 +1,5 @@
 # library
 library(dplyr)
-library(pheatmap)
 
 # load dataset============================================================
 admission <- read.csv("ADMISSIONS.CSV")
@@ -10,6 +9,15 @@ diagnoses_icd <- read.csv("DIAGNOSES_ICD.csv")
 D_ICD <- read.csv("D_ICD_DIAGNOSES.csv")
 lab_events <- read.csv("LABEVENTS.csv")
 D_labitems <- read.csv("D_LABITEMS.csv")
+
+colnames(admission) <- tolower(colnames(admission))
+colnames(patients) <- tolower(colnames(patients))
+colnames(ICUstays) <- tolower(colnames(ICUstays))
+colnames(diagnoses_icd) <- tolower(colnames(diagnoses_icd))
+colnames(D_ICD) <- tolower(colnames(D_ICD))
+colnames(lab_events) <- tolower(colnames(lab_events))
+colnames(D_labitems) <- tolower(colnames(D_labitems))
+
 
 adm.var <- c("subject_id","hadm_id", "admittime", "dischtime", 'admission_type',
              'ethnicity','marital_status', 'diagnosis','hospital_expire_flag','deathtime')
@@ -25,17 +33,20 @@ labevents_new <- lab_events %>% group_by(subject_id, hadm_id) %>% mutate(abnorm_
 diagnoses_icd <- diagnoses_icd %>% group_by(subject_id, hadm_id) %>% mutate(num_icd = n())
 diagnoses_icd.new <- diagnoses_icd[diagnoses_icd$seq_num==1,]
 # group by hadm_id to get los
-ICUstays.new <- ICUstays %>% group_by(hadm_id) %>% mutate(los_sum = sum(los)) %>% distinct(subject_id, hadm_id, los_sum)
+ICUstays.new <- ICUstays %>% group_by(hadm_id) %>% mutate(ICU_los_sum = sum(los), ICU_times = n_distinct(icustay_id)) %>% distinct(subject_id, hadm_id, ICU_los_sum, ICU_times)
 
 #merge data================================================================
 ## merge gender, dob from patients.csv to admissions
 admission.new <- left_join(admission.new, patients.new, by = 'subject_id')
 
+## calculate days stay in hospital
+admission.new$hospital_los <- as.numeric(difftime(admission.new$dischtime, admission.new$admittime, units = "days"))
+
 ## using PATIENTS.csv(bod) and ADMISSION.csv(admittime) to calculate the age
 admission.new$admit_age_yr <- as.numeric(difftime(admission.new$admittime,admission.new$dob,units = "weeks" ))/52.25
 
 ## merge los from ICUstays to admission.new
-admission.new <- left_join(admission.new, ICUstays.new[,c("los_sum", "hadm_id", "subject_id")], by = c("hadm_id","subject_id"))
+admission.new <- left_join(admission.new, ICUstays.new[,c("ICU_los_sum", "hadm_id", "subject_id", "ICU_times")], by = c("hadm_id","subject_id"))
 
 ## merge seq_num, icd9_code from diagnoses_icd to admission.new
 admission.new <- left_join(admission.new, diagnoses_icd.new[,c('subject_id','icd9_code', "hadm_id", "num_icd")],by = c('subject_id', "hadm_id"))
@@ -51,35 +62,35 @@ admission.new <- left_join(admission.new, labevents_new, by = c('subject_id', "h
 
 #######################################################
 ### some patients age 300 means age > 89
-unique(admission.new[admission.new$admit_age_yr >= 299,"subject_id"])
+#unique(admission.new[admission.new$admit_age_yr >= 299,"subject_id"])
 #######################################################
 
 admission.new$admit_age_yr <- ifelse(admission.new$admit_age_yr > 299, 90, admission.new$admit_age_yr)
 
+## combine race
+### combine UNKNOWN/NOT SPECIFIED
+rename_race <- function(words) {
+  temp_w <- unlist(strsplit(as.character(words), split = " "))[1]
+  temp_w <- unlist(strsplit(as.character(temp_w), split = "/"))[1]
+  if (temp_w == "UNKNOWN" | temp_w == "PATIENT" | temp_w == "UNABLE") {
+    temp_w = "UNKNOWN"
+  } else if (temp_w == "AMERICAN") {
+    temp_w = "AMERICAN NATIVE"
+  } else if (temp_w == "NATIVE") {
+    temp_w = "NATIVE HAWAIIAN"
+  } else if (temp_w == "MIDDLE") {
+    temp_w = "MIDDLE EASTERN"
+  } else if (temp_w == "MULTI") {
+    temp_w = "MULTI RACE"
+  } else if (temp_w == "SOUTH") {
+    temp_w = "SOUTH AMERICAN"
+  }
+  return(temp_w)
+}
+admission.new$ethnicity_adj <- as.factor(unlist(lapply(admission.new$ethnicity, rename_race)))
+
+
 write.csv(admission.new, "merged_data.csv")
 
-## graph
-continuous <- admission.new[,sapply(admission.new,is.numeric)]
-corr <- cor(continuous[,-c(1:2)])
-pheatmap(corr,cluster_rows = F,cluster_cols = F,color = colorRampPalette(c("white","navy"))(50))
-
-ggplot(admission.new) + geom_point(aes(x = admit_age_yr, y = log(los_sum))) +
-  xlab("Patients' Age when Admitted") +
-  ylab("log of longth of stay")
-
-ggplot(admission.new) + geom_boxplot(aes(x = gender, y = log(los_sum)))
 
 
-#pheatmap(corr,color = colorRampPalette(c("#ABC6D9",'#D8D8C0',"#D9ACAB"))(256))
-
-  #CNV_draw,
-         #cluster_rows = F,cluster_cols = T,scale = 'row',border_color = "grey",
-         #fontsize_row = 6, fontsize_col = 7,
-         #clustering_distance_cols = 'correlation',
-         #annotation_row=annotation_row,annotation_names_row = F,
-         #show_rownames = F,annotation_legend = T,
-         #color = colorRampPalette(c("navy", "white", "firebrick3"))(50))
-#CNV_heat3<-pheatmap(CNV_draw,
-
-hist(admission.new$los_sum, breaks = 20)
-admission.new["categorical_los"] = ifelse(admission.new$los_sum > 5, "<=5", ">5")

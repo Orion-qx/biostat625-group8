@@ -1,4 +1,7 @@
-# BIOSTAT 625 - Group 8
+# Classifying Length of Stay Using Patient Information: Model Development and Validation on MIMIC-III Clinical Database
+
+Group 8: Yuxuan Chen, Limeng Liu, Qiaoxue Liu, Weizhou Qian
+
 
 # Project Description:
 

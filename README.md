@@ -6,7 +6,7 @@ Hospital beds, wards and laboratories are important health care resources with l
 
 In this project, The Medical Information Mart for Intensive Care III(MIMIC-III), a large, real-world and de-identified collection of medical records, is used. There are over 700 million rows in all 40 tables in the original dataset. After selecting and literature reviewing, we finally decide to use 6 of them. 
 
-Although MIMIC-III is publicly-available database, it has restriction and cannot be public without premission. Therefore, we do not include datasets in this GitHub page.
+**Although MIMIC-III is publicly-available database, it has restriction and cannot be public without premission. Therefore, we do not include datasets in this GitHub page.**
 
 # Major Files:
 

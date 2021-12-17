@@ -25,6 +25,9 @@ This is script serves the same purpose as the first file but the final version, 
 ## Classifying_LoS_ML_mimic3.ipynb
 This script is used for data exploration and classifying the outcome using several maching learning methods(including SVM and Random Forest).
 
+## job_final.txt
+A txt file submitted to biostatistics cluster and reduce the time of data processing from 1 hour to 2 minutes.
+
 # Partial Results:
 ## Merged Data Description
 The original data includes 58976 observations with 11573 missing values. When exclude "diagnosis" as a variable, there are 33 columns in total; when include "diagnosis", there are 14566 columns.

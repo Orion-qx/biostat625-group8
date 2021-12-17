@@ -28,7 +28,7 @@ The original data includes 58976 observations with 11573 missing values. When ex
 
 Result of exploration of the variables are shown as below.(see more details in [Classifying_LoS_ML_mimic3.ipynb](https://github.com/Orion-qx/biostat625-group8/Classifying_LoS_ML_mimic3.ipynb))
 
-![Exploratory Analysis on Categorical variables]("./img/categorical_v.png")
+![Exploratory Analysis on Categorical variables]("biostat625-group8/img/categorical_v.png")
 
 ![Distribution of Age]("./img/age.png")
 

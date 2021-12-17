@@ -2,7 +2,7 @@
 library(dplyr)
 
 # load dataset============================================================
-admission <- read.csv("ADMISSIONS.CSV")
+admission <- read.csv("ADMISSIONS.csv")
 patients <- read.csv("PATIENTS.csv")
 ICUstays <- read.csv("ICUSTAYS.csv")
 diagnoses_icd <- read.csv("DIAGNOSES_ICD.csv")

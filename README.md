@@ -30,7 +30,7 @@ Result of exploration of the variables are shown as below.(see more details in [
 
 ![Exploratory Analysis on Categorical variables]("./img/age.pdf")
 
-![Distribution of Age]("/Orion-qx/biostat625-group8/blob/main/img/age.pdf")
+![Distribution of Age](/Orion-qx/biostat625-group8/blob/main/img/age.pdf)
 
 ## Classification
 outcome variable: y: (length of stay in hospital > 5 days)

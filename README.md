@@ -5,7 +5,26 @@ Group 8: Yuxuan Chen, Limeng Liu, Qiaoxue Liu, Weizhou Qian
 Detailed report can be found [here](./Group_8_Report_Classifying_LoS_on_MIMIC.pdf)
 
 ---
+- [Classifying Length of Stay Using Patient Information: Model Development and Validation on MIMIC-III Clinical Database](#classifying-length-of-stay-using-patient-information-model-development-and-validation-on-mimic-iii-clinical-database)
+  - [Project Description:](#project-description)
+  - [Methods](#methods)
+    - [Data Processing Steps](#data-processing-steps)
+    - [Machine Learning Methods](#machine-learning-methods)
+    - [One-Hot](#one-hot)
+      - [Support Vector Machine](#support-vector-machine)
+      - [Random Forest](#random-forest)
+      - [GridSearchCV](#gridsearchcv)
+      - [Cross-Validation](#cross-validation)
+  - [Results](#results)
+    - [Merged Data Description](#merged-data-description)
+    - [Classification](#classification)
+      - [SVM(exclude diagnosis)](#svmexclude-diagnosis)
+      - [Random Forest (exclude diagnosis)](#random-forest-exclude-diagnosis)
+      - [Random Forest (include diagnosis)](#random-forest-include-diagnosis)
+  - [Discussion](#discussion)
+  - [References](#references)
 
+---
 ## Project Description:
 
 Hospital beds, wards and laboratories are important health care resources with limited availability. Inefficient health resources management will result in lower profits for hospitals and overall higher costs for society. Prolonged waiting time and care delays could also be the problems. To deal with those issues, we think the length of stay(LOS) will be a good indicator since it explains up to 90% interpatient variation in hospital costs. 
@@ -106,7 +125,7 @@ Limitations:
 
 
 ---
-## References:  
+## References
 [1] Rapoport, John, et al. “Length of Stay Data as a Guide to Hospital Economic Performance for ICU Patients.” Medical Care, vol. 41, no. 3, Mar. 2003, pp. 386–397., https://doi.org/10.1097/01.mlr.0000053021.93198.96.   
 [2] Mekhaldi R.N., Caulier P., Chaabane S., Chraibi A., Piechowiak S. (2020) Using Machine Learning Models to Predict the Length of Stay in a Hospital Setting. In: Rocha Á., Adeli H., Reis L., Costanzo S., Orovic I., Moreira F. (eds) Trends and Innovations in Information Systems and Technologies. WorldCIST 2020. Advances in Intelligent Systems and Computing, vol 1159. Springer, Cham. https://doi.org/10.1007/978-3-030-45688-7_21  
 [3] Liu Yingxin , Phillips Mike Codde Jim (2001) Factors influencing patients' length of stay. Australian Health Review 24, 63-70., https://doi.org/10.1071/AH010063  

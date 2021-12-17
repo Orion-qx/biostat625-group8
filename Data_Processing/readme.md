@@ -8,3 +8,5 @@ Because the whole MIMIC-III is giant, we develop this R script using a small dem
 
 This is script serves the same purpose as the first file but the final version, with which we process data in Biostatistics Cluster. After running this script, new dataset is obtained and ready for model fitting. 
 
+## job_final.txt
+A txt file submitted to biostatistics cluster and reduce the time of data processing from 1 hour to 2 minutes.

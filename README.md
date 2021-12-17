@@ -60,11 +60,7 @@ Cross-validation is a resampling method that uses different portions of the data
 ## Results
 see more details in [Classifying_LoS_ML_mimic3.ipynb](./models/Classifying_LoS_ML_mimic3.ipynb)
 
-## job_final.txt
-A txt file submitted to biostatistics cluster and reduce the time of data processing from 1 hour to 2 minutes.
-
-# Partial Results:
-## Merged Data Description
+### Merged Data Description
 The original data includes 58976 observations with 11573 missing values. When exclude "diagnosis" as a variable, there are 33 columns in total; when include "diagnosis", there are 14566 columns.
 
 Summary of data statisics is shown as below:
@@ -74,15 +70,15 @@ We are also interested to see how demographic factors, for example, gender and a
 ![box](./img/boxplots.png)
 
 
-## Classification
+### Classification
 outcome variable: y: (length of stay in hospital > 5 days)
 
 80% of the data are used for training and 20% of them are used for testing.
 
-### SVM(exclude diagnosis)
+#### SVM(exclude diagnosis)
 With 5 fold cv, the unbiased accuracy score is around 0.6966.
 
-### Random Forest (exclude diagnosis)
+#### Random Forest (exclude diagnosis)
 With 5 fold cv, the unbiased accuracy score is around 0.6964.
 
 Turning for 24 pairs of hyperparameters, with 120 fittings, the best pair of hyperparameter results in AUC=0.74.
@@ -92,7 +88,7 @@ The following Graph shows the comparison between `baseline-SVC`, `baseline-RF`, 
 
 In the above figure, the classfication report of tuned RF is also showed on the right side. 
 
-### Random Forest (include diagnosis)
+#### Random Forest (include diagnosis)
 With the same procedure but include diagnosis as a variable, the best pair of hyperparameter results in AUC=0.71 after testing for 24 pairs of hyperparameters.
 
 **Detailed interpretation of model returns and comparison between models are discussed in the final report**

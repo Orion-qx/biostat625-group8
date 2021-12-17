@@ -2,59 +2,111 @@
 
 Group 8: Yuxuan Chen, Limeng Liu, Qiaoxue Liu, Weizhou Qian
 
+Detailed report can be found [here](./Group_8_Report_Classifying_LoS_on_MIMIC.pdf)
 
-# Project Description:
+---
+
+## Project Description:
 
 Hospital beds, wards and laboratories are important health care resources with limited availability. Inefficient health resources management will result in lower profits for hospitals and overall higher costs for society. Prolonged waiting time and care delays could also be the problems. To deal with those issues, we think the length of stay(LOS) will be a good indicator since it explains up to 90% interpatient variation in hospital costs. 
 
-In this project, The Medical Information Mart for Intensive Care III(MIMIC-III), a large, real-world and de-identified collection of medical records, is used. There are over 700 million rows in all 40 tables in the original dataset. After selecting and literature reviewing, we finally decide to use 6 of them. 
+In this project, The Medical Information Mart for Intensive Care III (MIMIC-III), a large, real-world and de-identified collection of medical records, is used. There are over 700 million rows in all 40 tables in the original dataset. After selecting and literature reviewing, we finally decide to use 6 of them. 
+
+The following is the schema of MIMIC-III:
+![Data Schema](./img/mimic_schema.png)
 
 **Although MIMIC-III is publicly-available database, it has restriction and cannot be public without premission. Therefore, we do not include datasets in this GitHub page.**
 
-# Major Files:
+---
 
-## demo_datamerge.R
+## Methods
+### Data Processing Steps
+Because of the large amount of data, it is difficult to perform data processing, analyzing, and modeling in a local computing machine. Thus, we plan to use the following steps described below for both high efficiency and promising accuracy: 
 
-Because the whole MIMIC-III is giant, we develop this R script using a small demo data. This script is tested locally and comfirmed bug-free. The major purpose of this script is to conduct data cleaning, merge tables, and generate exploratory results. 
+- (1) download the demo data to local machine
+- (2) process the demo data and save processing scripts
+- (3) use the query builder to extract a relatively large dataset
+- (4) test scripts in the large local dataset, fix any issues and optimize the code to get the highest efficiency
+- (5) use the biostatistics cluster or google cloud to access the entire MIMIC-III dataset, which is approximately 7GB in total
+- (6) implement a bash script to unzip the data folder and subfolders to find the tables needed
+- (7) implement the script in server for extracting and processing
+- (8) use cloud computing to implement several machine learning models on a dataset
+- (9) tuning hyperparameters of machine learning models
+- (10) return the results and metrics
+- (11) compare the accuracy and other metrics between different models.
 
-## demo_datamerge_final.R
+Processing scripts can be found in "data_processing" folder.
 
-This is script serves the same purpose as the first file but the final version, with which we process data in Biostatistics Cluster. After running this script, new dataset is obtained and ready for model fitting. 
+### Machine Learning Methods
+### One-Hot
+One-hot encoding methods are used for processing categorical variables. In avoiding using factorization (assign integers for categories which will make models misunderstanding that bigger number indicates more important), one-hot can help with unbiased categorization.
+An image illustration of one-hot shown below:
+![One Hot](./img/one-hot.png)
+
+#### Support Vector Machine
+Support vector machines (SVMs) are a set of supervised learning methods used for classification, regression, and outlier detection . In our project, SVM is used for classifying the length of stays as long (greater than 5 days) and short (less or equal than 5 days) with basic parameters. 
 
 
-## Classifying_LoS_ML_mimic3.ipynb
-This script is used for data exploration and classifying the outcome using several maching learning methods(including SVM and Random Forest).
+#### Random Forest
+A random forest is a meta estimator that fits several decision tree classifiers on various sub-samples of the dataset and uses averaging to improve the predictive accuracy and control over-fitting and is also conducted in this project. 
 
-# Partial Results:
+#### GridSearchCV
+To improve the accuracy of the classification results, a method named GridSearchCV helps tune hyperparameters in the machine learning models. By listing all candidates for each hyperparameter and fitting with all combinations, it will allow the selection of the best parameters automatically with evaluation results for each parameter candidate. 
+
+#### Cross-Validation
+Cross-validation is a resampling method that uses different portions of the data to test and train a model on different iterations. Using the 5-fold cross-validation and calculation of the average accuracy score will help to get unbiased validation and evaluation results.
+
+
+## Results
+see more details in [Classifying_LoS_ML_mimic3.ipynb](./models/Classifying_LoS_ML_mimic3.ipynb)
+
 ## Merged Data Description
 The original data includes 58976 observations with 11573 missing values. When exclude "diagnosis" as a variable, there are 33 columns in total; when include "diagnosis", there are 14566 columns.
 
-Result of exploration of the variables are shown as below.(see more details in [Classifying_LoS_ML_mimic3.ipynb](https://github.com/Orion-qx/biostat625-group8/Classifying_LoS_ML_mimic3.ipynb))
+Summary of data statisics is shown as below:
+![summary stats](./img/Table1.png)
 
-![Exploratory Analysis on Categorical variables](https://github.com/Orion-qx/biostat625-group8/blob/main/img/categorical_v.png)
+We are also interested to see how demographic factors, for example, gender and age, will impact on the length of stay. Boxplots for gender and age are shown as below:
+![box](./img/boxplots.png)
 
-![Distribution of Age](https://github.com/Orion-qx/biostat625-group8/blob/main/img/age.png)
 
 ## Classification
 outcome variable: y: (length of stay in hospital > 5 days)
 
 80% of the data are used for training and 20% of them are used for testing.
 
-(Please see more details in [Classifying_LoS_ML_mimic3.ipynb](https://github.com/Orion-qx/biostat625-group8/Classifying_LoS_ML_mimic3.ipynb))
-
 ### SVM(exclude diagnosis)
 With 5 fold cv, the unbiased accuracy score is around 0.6966.
 
-### Random Forest(exclude diagnosis)
+### Random Forest (exclude diagnosis)
 With 5 fold cv, the unbiased accuracy score is around 0.6964.
 
-Turning for 24 pairs of hyperparameters, the best pair of hyperparameter results in AUC=0.74.
+Turning for 24 pairs of hyperparameters, with 120 fittings, the best pair of hyperparameter results in AUC=0.74.
 
-### Random Forest(include diagnosis)
+The following Graph shows the comparison between `baseline-SVC`, `baseline-RF`, `tuned-RF` in same training and testing dataset, with their ROC and AUC displayed:
+![roc](./img/Figure2.png)
+
+In the above figure, the classfication report of tuned RF is also showed on the right side. 
+
+### Random Forest (include diagnosis)
 With the same procedure but include diagnosis as a variable, the best pair of hyperparameter results in AUC=0.71 after testing for 24 pairs of hyperparameters.
 
+**Detailed interpretation of model returns and comparison between models are discussed in the final report**
 
-# References:  
+---
+
+## Discussion
+Drawbacks from having to many predictors: when the diagnosis is included in the dataset of training, the model did not improve the accuracy, but lowered the efficiency. 
+
+Limitations:
+- admission id as a unique identifier for each observation, however each patient can come with multiple admission id 
+- the percentage of abnormal lab tests is calcuated based on the  hypotheses that for the same disease/initial diagnosis, all doctors will order the same lab tests
+- age over 89 is hidden and we imupted as 90 
+- MIMIC dataset was collected only in one hospital in Boston, location will not be a variable in our project, but a potentially significant cause 
+
+
+---
+## References:  
 [1] Rapoport, John, et al. “Length of Stay Data as a Guide to Hospital Economic Performance for ICU Patients.” Medical Care, vol. 41, no. 3, Mar. 2003, pp. 386–397., https://doi.org/10.1097/01.mlr.0000053021.93198.96.   
 [2] Mekhaldi R.N., Caulier P., Chaabane S., Chraibi A., Piechowiak S. (2020) Using Machine Learning Models to Predict the Length of Stay in a Hospital Setting. In: Rocha Á., Adeli H., Reis L., Costanzo S., Orovic I., Moreira F. (eds) Trends and Innovations in Information Systems and Technologies. WorldCIST 2020. Advances in Intelligent Systems and Computing, vol 1159. Springer, Cham. https://doi.org/10.1007/978-3-030-45688-7_21  
 [3] Liu Yingxin , Phillips Mike Codde Jim (2001) Factors influencing patients' length of stay. Australian Health Review 24, 63-70., https://doi.org/10.1071/AH010063  

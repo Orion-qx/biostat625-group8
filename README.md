@@ -5,27 +5,27 @@ Group 8: Yuxuan Chen, Limeng Liu, Qiaoxue Liu, Weizhou Qian
 Detailed report can be found [here](./Group_8_Report_Classifying_LoS_on_MIMIC.pdf)
 
 ---
-- [Classifying Length of Stay Using Patient Information: Model Development and Validation on MIMIC-III Clinical Database](#classifying-length-of-stay-using-patient-information-model-development-and-validation-on-mimic-iii-clinical-database)
-  - [Project Description:](#project-description)
-  - [Methods](#methods)
-    - [Data Processing Steps](#data-processing-steps)
-    - [Machine Learning Methods](#machine-learning-methods)
-    - [One-Hot](#one-hot)
-      - [Support Vector Machine](#support-vector-machine)
-      - [Random Forest](#random-forest)
-      - [GridSearchCV](#gridsearchcv)
-      - [Cross-Validation](#cross-validation)
-  - [Results](#results)
-    - [Merged Data Description](#merged-data-description)
-    - [Classification](#classification)
-      - [SVM(exclude diagnosis)](#svmexclude-diagnosis)
-      - [Random Forest (exclude diagnosis)](#random-forest-exclude-diagnosis)
-      - [Random Forest (include diagnosis)](#random-forest-include-diagnosis)
-  - [Discussion](#discussion)
-  - [References](#references)
+## Table of Contents
+- [Project Description](#project-description)
+- [Methods](#methods)
+  - [Data Processing Steps](#data-processing-steps)
+  - [Machine Learning Methods](#machine-learning-methods)
+  - [One-Hot](#one-hot)
+    - [Support Vector Machine](#support-vector-machine)
+    - [Random Forest](#random-forest)
+    - [GridSearchCV](#gridsearchcv)
+    - [Cross-Validation](#cross-validation)
+- [Results](#results)
+  - [Merged Data Description](#merged-data-description)
+  - [Classification](#classification)
+    - [SVM(exclude diagnosis)](#svmexclude-diagnosis)
+    - [Random Forest (exclude diagnosis)](#random-forest-exclude-diagnosis)
+    - [Random Forest (include diagnosis)](#random-forest-include-diagnosis)
+- [Discussion](#discussion)
+- [References](#references)
 
 ---
-## Project Description:
+## Project Description
 
 Hospital beds, wards and laboratories are important health care resources with limited availability. Inefficient health resources management will result in lower profits for hospitals and overall higher costs for society. Prolonged waiting time and care delays could also be the problems. To deal with those issues, we think the length of stay(LOS) will be a good indicator since it explains up to 90% interpatient variation in hospital costs. 
 

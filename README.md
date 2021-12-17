@@ -51,6 +51,20 @@ Turning for 24 pairs of hyperparameters, the best pair of hyperparameter results
 With the same procedure but include diagnosis as a variable, the best pair of hyperparameter results in AUC=0.71 after testing for 24 pairs of hyperparameters.
 
 
+# References:  
+References
+[1] Rapoport, John, et al. “Length of Stay Data as a Guide to Hospital Economic Performance for ICU Patients.” Medical Care, vol. 41, no. 3, Mar. 2003, pp. 386–397., https://doi.org/10.1097/01.mlr.0000053021.93198.96.   
+[2] Mekhaldi R.N., Caulier P., Chaabane S., Chraibi A., Piechowiak S. (2020) Using Machine Learning Models to Predict the Length of Stay in a Hospital Setting. In: Rocha Á., Adeli H., Reis L., Costanzo S., Orovic I., Moreira F. (eds) Trends and Innovations in Information Systems and Technologies. WorldCIST 2020. Advances in Intelligent Systems and Computing, vol 1159. Springer, Cham. https://doi.org/10.1007/978-3-030-45688-7_21  
+[3] Liu Yingxin , Phillips Mike Codde Jim (2001) Factors influencing patients' length of stay. Australian Health Review 24, 63-70., https://doi.org/10.1071/AH010063  
+[4] Kelly, Maria, et al. “Factors Predicting Hospital Length-of-Stay and Readmission after Colorectal Resection: A Population-Based Study of Elective and Emergency Admissions.” BMC Health Services Research, BioMed Central, 26 Mar. 2012, https://link.springer.com/article/10.1186/1472-6963-12-77.   
+[5] Wang, Ying, et al. “Factors Associated with a Prolonged Length of Stay after Acute Exacerbation of Chronic Obstructive Pulmonary Disease (AECOPD).” International Journal of Chronic Obstructive Pulmonary Disease, Dove Medical Press, 20 Jan. 2014, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3901775/.  
+[6] Yoon, Philip, et al. “Analysis of Factors Influencing Length of Stay in the Emergency Department.” Canadian Journal of Emergency Medicine, vol. 5, no. 3, 2003, pp. 155–161., doi:10.1017/S1481803500006539.  
+[7] T. Gentimis, A. J. Alnaser, A. Durante, K. Cook and R. Steele, "Predicting Hospital Length of Stay Using Neural Networks on MIMIC III Data," 2017 IEEE 15th Intl Conf on Dependable, Autonomic and Secure Computing, 15th Intl Conf on Pervasive Intelligence and Computing, 3rd Intl Conf on Big Data Intelligence and Computing and Cyber Science and Technology Congress(DASC/PiCom/DataCom/CyberSciTech), 2017, pp. 1194-1201, doi: 10.1109/DASC-PICom-DataCom-CyberSciTec.2017.191.  
+[8] B. Thompson, K. O. Elish and R. Steele, "Machine Learning-Based Prediction of Prolonged Length of Stay in Newborns," 2018 17th IEEE International Conference on Machine Learning and Applications (ICMLA), 2018, pp. 1454-1459, doi: 10.1109/ICMLA.2018.00236.  
+[9] Johnson, A., Pollard, T., Shen, L. et al. MIMIC-III, a freely accessible critical care database. Sci Data 3, 160035 (2016). https://doi.org/10.1038/sdata.2016.35  
+[10] Felipe_Torres. “Query Builder v1.2.” Query Builder, https://querybuilder-lcp.mit.edu/.   
+[11] “1.4. Support Vector Machines.” Scikit, https://scikit-learn.org/stable/modules/svm.html#:~:text=Support%20vector%20machines%20(SVMs)%20are,than%20the%20number%20of%20samples.   
+[12] “Sklearn.ensemble.randomforestclassifier.” Scikit, https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html.   
 
 
 

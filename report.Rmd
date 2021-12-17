@@ -1,0 +1,29 @@
+---
+title: "report"
+output: pdf_document
+---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r}
+library(tidyverse)
+library(cowplot)
+library(pheatmap)
+
+dat <- read.csv("merged_data.csv")
+dat <- na.omit(dat)
+dat$y <- as.integer(dat$hospital_los > 5)
+l5 = dat$admit_age_yr[dat$y == 0]
+g5 = dat$admit_age_yr[dat$y == 1]
+plot(dat$admit_age_yr, dat$hospital_los)
+bp1 <- ggplot(dat) + geom_boxplot(aes(x = gender, y = log(hospital_los)))+labs(y= "length of stay in hospital(log transformation)", x = "gender")
+bp2 <- ggplot(dat) + geom_boxplot(aes(x = as.factor(y), y = admit_age_yr)) +labs(x= "length of stay in hospital", y = "age") 
+
+plot_grid(bp1, bp2, nrow = 1, ncol = 2)
+## graph
+continuous <- dat[,sapply(dat,is.numeric)]
+corr <- cor(continuous[,-c(1:2)])
+phmap <- pheatmap(corr,cluster_rows = F,cluster_cols = F,color = colorRampPalette(c("white","navy"))(50))
+```
